@@ -22,7 +22,7 @@ def create(request: PostBase, db:Session = Depends(get_db), current_user: UserAu
     if not request.image_url_type in image_url_types:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                             detail='Image type is not supported')
-    return post.create(db, request)
+    return post.create(db, request, current_user.id)
 
 @router.get('/all', response_model=List[PostDisplay])
 def get_all(db:Session = Depends(get_db)):
