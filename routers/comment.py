@@ -18,4 +18,4 @@ def comments(post_id: int,db: Session =Depends(get_db)):
 
 @router.post('')
 def create(request: CommentBase, db: Session = Depends(get_db), current_user: UserAuth = Depends(get_current_user)):
-    return comment.create(db, request)
+    return comment.create(db, request, current_user.username)
