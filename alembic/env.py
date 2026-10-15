@@ -1,4 +1,4 @@
-from db.database import Base
+from db.database import Base, SQLALCHEMY_DATABASE_URL
 from db.models import User, Post
 from logging.config import fileConfig
 
@@ -10,6 +10,8 @@ from alembic import context
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+# use the same database as the app (DATABASE_URL in .env)
+config.set_main_option('sqlalchemy.url', SQLALCHEMY_DATABASE_URL)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

@@ -1,3 +1,6 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi.security import OAuth2PasswordBearer
 from typing import Optional
 from datetime import datetime, timedelta
@@ -9,9 +12,13 @@ from db import user as db_user
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-SECRET_KEY = 'a7f3c91e5b2d8046f1a9e7c3d6b0825f'
-ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    raise RuntimeError('SECRET_KEY is not set. Copy .env.example to .env and set it.')
+ALGORITHM = os.getenv('ALGORITHM', 'HS256')
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES', 30))
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
