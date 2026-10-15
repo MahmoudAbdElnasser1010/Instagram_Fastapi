@@ -5,4 +5,5 @@ bcrypt
 alembic
 python-multipart
 aiofiles
-python-josepython-dotenv
+python-jose
+python-dotenv
