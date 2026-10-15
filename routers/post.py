@@ -28,10 +28,7 @@ def create(request: PostBase, db:Session = Depends(get_db), current_user: UserAu
 def get_all(db:Session = Depends(get_db)):
     return post.get_all_posts(db)
 
-@router.delete('/{post_id}', status_code=status.HTTP_204_NO_CONTENT)
-def delete(post_id: int, db: Session = Depends(get_db)):
-    post.delete_post(db, post_id)
-    return "deleted"
+
 
 @router.post('/image')
 def upload_image(image: UploadFile = File(...), current_user: UserAuth = Depends(get_current_user)):
@@ -46,3 +43,6 @@ def upload_image(image: UploadFile = File(...), current_user: UserAuth = Depends
 
     return {'filename': path}
 
+@router.delete('/delete/{id}')
+def delete(id: int, db:Session = Depends(get_db), current_user: UserAuth = Depends(get_current_user)):
+    return post.delete_post(db, id, current_user.id)
